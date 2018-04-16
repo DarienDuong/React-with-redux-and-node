@@ -1,21 +1,47 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Form from './Form'
+import {connect} from 'react-redux'
+import {fetchTerms} from './store/actions/actionCreators'
 
 class App extends Component {
+  componentDidMount(){
+  	// this.props.fetchTerms('asdfdsf')
+  }
+
+  submitHandler = (term) => {
+  	this.props.fetchTerms(term)
+  }
+
+  renderWords = () => {
+  	// if(this.props.results.length === 0){
+  	// 	return <h1>enter some text</h1>
+  	// }
+  	if(this.props.loading){
+  		return <h1>Loading</h1>
+  	} if(this.props.results.length > 0){
+  		return this.props.results.map(word => <h1>{word}</h1>)
+  	}
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h1>Search for synonyms of a word</h1>
+        <Form submitHandler={this.submitHandler} />
+        {this.renderWords()}
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (reduxState) => {
+  return {
+    results: reduxState.results,
+    loading: reduxState.loading,
+    error: reduxState.error
+  }
+}
+
+export default connect(mapStateToProps, {fetchTerms})(App);
+
