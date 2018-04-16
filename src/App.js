@@ -6,7 +6,7 @@ import {fetchTerms} from './store/actions/actionCreators'
 
 class App extends Component {
   componentDidMount(){
-  	// this.props.fetchTerms('asdfdsf')
+  	this.props.fetchTerms(localStorage.getItem('search'))
   }
 
   submitHandler = (term) => {
@@ -14,9 +14,9 @@ class App extends Component {
   }
 
   renderWords = () => {
-  	// if(this.props.results.length === 0){
-  	// 	return <h1>enter some text</h1>
-  	// }
+  	if(this.props.error){
+  		return <h1 class='error-message'>Enter a valid word</h1>
+  	}
   	if(this.props.loading){
   		return <h1>Loading</h1>
   	} if(this.props.results.length > 0){

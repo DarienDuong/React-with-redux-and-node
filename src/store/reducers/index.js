@@ -12,7 +12,7 @@ const rootReducer = (state=DEFAULT_STATE, action) => {
       return {...state, loading: true}
     }
     case t.FETCH_TERMS_SUCCESS: {
-      return {...state, results: action.results, loading: false}
+      return {...state, error: false, results: action.results, loading: false}
     }
     case t.FETCH_TERMS_FAIL: {
       return {...state, error: true, loading: false}

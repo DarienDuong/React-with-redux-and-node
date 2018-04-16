@@ -12,6 +12,8 @@ export function fetchTerms(term){
           dispatch(fetchTermsFail())
         } else {
           dispatch(fetchTermsSuccess(response.data.data))
+          localStorage.setItem('search', term)
+          localStorage.setItem('results', response.data.data)
         }
       })
       .catch(err => console.log(err))
